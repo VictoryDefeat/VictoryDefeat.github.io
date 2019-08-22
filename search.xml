@@ -1,6 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[题解P1636【Einstein学画画】]]></title>
+    <url>%2F%E9%A2%98%E8%A7%A3P1636%E3%80%90Einstein%E5%AD%A6%E7%94%BB%E7%94%BB%E3%80%91%2F</url>
+    <content type="text"><![CDATA[虽然跟楼上各位写得差不多，但是！ 我使用了无敌的位运算！其实很简单（没什么用……） 在此，先解释一下按位与（&amp;）：,a&amp;b是指将a，b分别转为二进制，然后逐位比较，如两者的同位皆为1，则结果的该位为1，否则为0。 那么，可以看出%2为1的数二进制末尾必为1，否则必为0，1&amp;1为1,0&amp;1为0，那么该数&amp;1的结果即可判断奇偶性。 综上所述：a&amp;1=1，a为奇数，否则，a为偶数位运算大法好！！！ 闲话不多说，下面奉上代码： 1234567891011121314151617181920212223#include&lt;cstdio&gt;//位运算大法好 inline void read(int &amp;a)//快速读入 &#123; int k=1;//系数 char c=getchar();a=0;//定义字符，并进行第一次读入 while(c&lt;'0'||c&gt;'9')&#123;if(c=='-')k=-1;c=getchar();&#125;//如果不为数字，继续读入，特判：如为-号，系数变为-1 while(c&gt;='0'&amp;&amp;c&lt;='9')&#123;a=a*10+c-'0';c=getchar();&#125;//如果是数字，需将变量*10+当前数字 a*=k;//乘上系数 &#125;int s,n,m,a,b,f[1010];//定义变量，s为度为奇数点总数，n，m变量见题意，a，b是读入的边的两端点，f数组统计点度数 int main()&#123; read(n);read(m);//懒得解释 for(int i=1;i&lt;=m;i++) &#123; read(a);read(b);//读入 f[a]++; f[b]++;//两点的度+1 &#125; for(int i=1;i&lt;=n;i++)if(f[i]&amp;1)s++;//如果当前点度为奇数，s++ printf("%d",s?s/2:1);//输出s/2（s=0时输出1）（其中s为0或2时，能一笔画，故输出结果为1，这样快一些，又短） //注意：这里使用了位运算！具体方法见上面说明！ &#125;]]></content>
+      <tags>
+        <tag>题解</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[题解P2036【Perket】]]></title>
+    <url>%2F%E9%A2%98%E8%A7%A3P2036%E3%80%90Perket%E3%80%91%2F</url>
+    <content type="text"><![CDATA[这题一看就知道要用DFS，其实也可以算作是一题新手练手题吧，练练DFS 有人说可以暴力？！反正我只会DFS…… 第二篇题解，各位神犇dalao们请谅解（好像两篇都是DFS?） 废话不多说，下面奉上我的AC代码（具体说明见注释）： 12345678910111213141516171819202122232425262728293031323334353637383940414243#include&lt;cstdio&gt;#include&lt;algorithm&gt;//头文件，min和abs在algorithm中（STL大法好）！struct perket//定义结构体&#123; int sour,sweet;//sour表示酸度，sweet表示甜度&#125;a[11];//配料int s=1,w,ans=2147483646,n;//ans一开始开2147483647莫名RE，用2147483646就好了。。。。。。long long ok;//ok表示所用配料数inline void read(int &amp;a)//这里详细解释一下快速读入，inline的作用为加快该函数所用时间，注意：若不止一个输入输出文件，则不可用inline！&#123; char c;//定义字符存储变量 int k=1;a=0;//定义系数（初始为1）与所读入变量 c=getchar();//读入字符 while(c&lt;'0'||c&gt;'9')&#123;if(c=='-')k=-1;c=getchar();&#125;//如果该字符不为数字，跳过该字符，注意：由于本题有负数，所以要加判断是否为-号，如为-号，系数变为-1 while(c&gt;='0'&amp;&amp;c&lt;='9')&#123;a=a*10+c-'0';c=getchar();&#125;//如果该字符为数字，原数*10+该字符-‘0’,其实*10+是特别特别有用的一个东西，不在这里详细论述，以后有时间的话会专门发一篇文章来解释*10+与其作用 a*=k;//原数乘上系数&#125;inline void print(int a)//快速输出&#123; if(a&gt;10)print(a/10);//如果当前该数超过10，输出除个位外部分 putchar(a%10+'0');//输出个位&#125;void DFS(int i)//DFS，i表示当前搜索到第i个配料&#123; if(i==n+1)return ;//如果全部搜索完毕，回溯 s*=a[i].sour;//当前酸度乘上该配料酸度 w+=a[i].sweet;//当前甜度加上该配料甜度 ok++;//所用配料数+1 ans=std::min(ans,abs(s-w));//更新答案，取原答案与甜酸度之差的最小值，有人说可以加一个特判：当ans=0时，直接输出！我没有这么做，因为个人感觉没啥用 DFS(i+1);//向下继续搜索 s/=a[i].sour;//当前酸度除以该配料酸度 w-=a[i].sweet;//当前甜度减去该配料甜度 ok--;//所用配料数-1 //这里解释一下：递归之前改变的值，递归过后一定要改回原值，即使你不再向下搜索，这也是递归的基本特征之一！！！ DFS(i+1);//向下继续搜索，这是为了保证答案的全面性&#125;int main()&#123; read(n); for(int i=1;i&lt;=n;i++)&#123;read(a[i].sour);read(a[i].sweet);&#125;//输入，不解释 DFS(1);//DFS，从第一种配料开始搜索 print(ans);//输出答案&#125; 最后，强调一下：禁止抄袭！禁止抄袭！禁止抄袭！求洛谷一定要给过！]]></content>
+      <tags>
+        <tag>题解</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[题解P2666【Bessie的秘密牧场】]]></title>
+    <url>%2F%E9%A2%98%E8%A7%A3P2666%E3%80%90Bessie%E7%9A%84%E7%A7%98%E5%AF%86%E7%89%A7%E5%9C%BA%E3%80%91%2F</url>
+    <content type="text"><![CDATA[这题一看就是典型的DFS，而且也不难，一开始暴力做了一遍60分，后来DFS一遍就AC了。（搜索面积，只不过在常规上加了一个for循环）下面送上DFS的简单AC代码：（1764ms，有点慢）抵抗打表，推崇深搜！ 123456789101112131415#include&lt;cstdio&gt;#include&lt;cmath&gt;int n,z;//z为方案总数，n见题意 void DFS(int x,int s)//x表示当前已搜索的块数，s表示目前的总面积&#123; if(x==4)if(s==n)z++;else;//如果已搜索4块而且目前总面积正好为n，方案数+1，else；是为了让下一个else与前一个if配对（典型的空语句应用，也可用if(x==4)&#123;if(s==n)z++;&#125;来表示） else for(int i=0;i&lt;=sqrt(n);i++)DFS(x+1,s+i*i);//i循环从0到根号n，（i为边长，因为可以有周长为0的草皮），每次搜索下一个，当前总面积加上i的平方，看了其他题解，是先加上，递归完了再减，不如这样直接作为形参来得方便（不过好像慢一点？不存在的！）&#125;int main()&#123; scanf("%d",&amp;n);//输入 DFS(0,0);//初始未搜索，一开始一共搜索0块，总面积当然也为0 printf("%d",z);//输出 return 0;&#125;]]></content>
+      <tags>
+        <tag>题解</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Hello!]]></title>
     <url>%2FHello%2F</url>
     <content type="text"><![CDATA[这是我的第一篇博客123456#include&lt;bits/stdc++.h&gt;int main()&#123; printf("Hello World!"); return 0;&#125; $\text{HelloWorld!}$ Hello!]]></content>
