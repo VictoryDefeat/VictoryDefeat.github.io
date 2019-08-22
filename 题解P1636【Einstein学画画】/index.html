@@ -54,18 +54,18 @@
   };
 </script>
 
-  <meta name="description" content="虽然跟楼上各位写得差不多，但是！ 我使用了无敌的位运算！其实很简单（没什么用……） 在此，先解释一下按位与（&amp;amp;）：,a&amp;amp;b是指将a，b分别转为二进制，然后逐位比较，如两者的同位皆为1，则结果的该位为1，否则为0。 那么，可以看出%2为1的数二进制末尾必为1，否则必为0，1&amp;amp;1为1,0&amp;amp;1为0，那么该数&amp;amp;1的结果即可判断奇偶性。 综上所述：a&amp;amp;1=1，">
+  <meta name="description" content="虽然跟楼上各位写得差不多，但是！我使用了无敌的位运算！其实很简单（没什么用……）在此，先解释一下按位与（&amp;amp;）：,a&amp;amp;b是指将a，b分别转为二进制，然后逐位比较，如两者的同位皆为1，则结果的该位为1，否则为0。">
 <meta name="keywords" content="题解">
 <meta property="og:type" content="article">
 <meta property="og:title" content="题解P1636【Einstein学画画】">
 <meta property="og:url" content="http://VictoryDefeat.github.io/题解P1636【Einstein学画画】/index.html">
 <meta property="og:site_name" content="I am the weakest!">
-<meta property="og:description" content="虽然跟楼上各位写得差不多，但是！ 我使用了无敌的位运算！其实很简单（没什么用……） 在此，先解释一下按位与（&amp;amp;）：,a&amp;amp;b是指将a，b分别转为二进制，然后逐位比较，如两者的同位皆为1，则结果的该位为1，否则为0。 那么，可以看出%2为1的数二进制末尾必为1，否则必为0，1&amp;amp;1为1,0&amp;amp;1为0，那么该数&amp;amp;1的结果即可判断奇偶性。 综上所述：a&amp;amp;1=1，">
+<meta property="og:description" content="虽然跟楼上各位写得差不多，但是！我使用了无敌的位运算！其实很简单（没什么用……）在此，先解释一下按位与（&amp;amp;）：,a&amp;amp;b是指将a，b分别转为二进制，然后逐位比较，如两者的同位皆为1，则结果的该位为1，否则为0。">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:updated_time" content="2019-08-22T07:03:28.024Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="题解P1636【Einstein学画画】">
-<meta name="twitter:description" content="虽然跟楼上各位写得差不多，但是！ 我使用了无敌的位运算！其实很简单（没什么用……） 在此，先解释一下按位与（&amp;amp;）：,a&amp;amp;b是指将a，b分别转为二进制，然后逐位比较，如两者的同位皆为1，则结果的该位为1，否则为0。 那么，可以看出%2为1的数二进制末尾必为1，否则必为0，1&amp;amp;1为1,0&amp;amp;1为0，那么该数&amp;amp;1的结果即可判断奇偶性。 综上所述：a&amp;amp;1=1，">
+<meta name="twitter:description" content="虽然跟楼上各位写得差不多，但是！我使用了无敌的位运算！其实很简单（没什么用……）在此，先解释一下按位与（&amp;amp;）：,a&amp;amp;b是指将a，b分别转为二进制，然后逐位比较，如两者的同位皆为1，则结果的该位为1，否则为0。">
   <link rel="canonical" href="http://VictoryDefeat.github.io/题解P1636【Einstein学画画】/">
 
 
@@ -319,9 +319,9 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>虽然跟楼上各位写得差不多，但是！</p>
-<h1 id="我使用了无敌的位运算！"><a href="#我使用了无敌的位运算！" class="headerlink" title="我使用了无敌的位运算！"></a>我使用了<del>无敌</del>的位运算！</h1><p>其实很简单（没什么用……）</p>
-<p>在此，先解释一下按位与（&amp;）：,a&amp;b是指将a，b分别转为二进制，然后逐位比较，如两者的同位皆为1，则结果的该位为1，否则为0。</p>
+        <p>虽然跟楼上各位写得差不多，但是！</p><h1 id="我使用了无敌的位运算！"><a href="#我使用了无敌的位运算！" class="headerlink" title="我使用了无敌的位运算！"></a>我使用了<del>无敌</del>的位运算！</h1><p>其实很简单（没什么用……）</p><p>在此，先解释一下按位与（&amp;）：,a&amp;b是指将a，b分别转为二进制，然后逐位比较，如两者的同位皆为1，则结果的该位为1，否则为0。</p><a id="more"></a>
+
+
 <p>那么，可以看出%2为1的数二进制末尾必为1，否则必为0，1&amp;1为1,0&amp;1为0，那么该数&amp;1的结果即可判断奇偶性。</p>
 <h1 id="综上所述：a-amp-1-1，a为奇数，否则，a为偶数"><a href="#综上所述：a-amp-1-1，a为奇数，否则，a为偶数" class="headerlink" title="综上所述：a&amp;1=1，a为奇数，否则，a为偶数"></a>综上所述：a&amp;1=1，a为奇数，否则，a为偶数</h1><p><del>位运算大法好！！！</del></p>
 <p>闲话不多说，下面奉上代码：</p>
