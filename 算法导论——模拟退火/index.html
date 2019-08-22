@@ -54,19 +54,21 @@
   };
 </script>
 
-  <meta name="description" content="虽然跟楼上各位写得差不多，但是！我使用了无敌的位运算！其实很简单（没什么用……）在此，先解释一下按位与（&amp;amp;）：,a&amp;amp;b是指将a，b分别转为二进制，然后逐位比较，如两者的同位皆为1，则结果的该位为1，否则为0。">
-<meta name="keywords" content="题解">
+  <meta name="description" content="今天来说一个玄学算法：模拟退火！（真·玄学）先说一说它的名称来源：$Link$ 退火是一种金属热处理工艺，指的是将金属缓慢加热到一定温度，保持足够时间，然后以适宜速度冷却。……">
+<meta name="keywords" content="算法导论">
 <meta property="og:type" content="article">
-<meta property="og:title" content="题解P1636【Einstein学画画】">
-<meta property="og:url" content="http://VictoryDefeat.github.io/题解P1636【Einstein学画画】/index.html">
+<meta property="og:title" content="算法导论——模拟退火">
+<meta property="og:url" content="http://VictoryDefeat.github.io/算法导论——模拟退火/index.html">
 <meta property="og:site_name" content="I am the weakest!">
-<meta property="og:description" content="虽然跟楼上各位写得差不多，但是！我使用了无敌的位运算！其实很简单（没什么用……）在此，先解释一下按位与（&amp;amp;）：,a&amp;amp;b是指将a，b分别转为二进制，然后逐位比较，如两者的同位皆为1，则结果的该位为1，否则为0。">
+<meta property="og:description" content="今天来说一个玄学算法：模拟退火！（真·玄学）先说一说它的名称来源：$Link$ 退火是一种金属热处理工艺，指的是将金属缓慢加热到一定温度，保持足够时间，然后以适宜速度冷却。……">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-08-22T07:13:42.915Z">
+<meta property="og:image" content="https://upload.wikimedia.org/wikipedia/commons/d/d5/Hill_Climbing_with_Simulated_Annealing.gif">
+<meta property="og:updated_time" content="2019-08-22T07:17:39.399Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="题解P1636【Einstein学画画】">
-<meta name="twitter:description" content="虽然跟楼上各位写得差不多，但是！我使用了无敌的位运算！其实很简单（没什么用……）在此，先解释一下按位与（&amp;amp;）：,a&amp;amp;b是指将a，b分别转为二进制，然后逐位比较，如两者的同位皆为1，则结果的该位为1，否则为0。">
-  <link rel="canonical" href="http://VictoryDefeat.github.io/题解P1636【Einstein学画画】/">
+<meta name="twitter:title" content="算法导论——模拟退火">
+<meta name="twitter:description" content="今天来说一个玄学算法：模拟退火！（真·玄学）先说一说它的名称来源：$Link$ 退火是一种金属热处理工艺，指的是将金属缓慢加热到一定温度，保持足够时间，然后以适宜速度冷却。……">
+<meta name="twitter:image" content="https://upload.wikimedia.org/wikipedia/commons/d/d5/Hill_Climbing_with_Simulated_Annealing.gif">
+  <link rel="canonical" href="http://VictoryDefeat.github.io/算法导论——模拟退火/">
 
 
 <script id="page-configurations">
@@ -80,7 +82,7 @@
   };
 </script>
 
-  <title>题解P1636【Einstein学画画】 | I am the weakest!</title>
+  <title>算法导论——模拟退火 | I am the weakest!</title>
   <meta name="generator" content="Hexo 3.9.0">
   
 
@@ -243,7 +245,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://VictoryDefeat.github.io/题解P1636【Einstein学画画】/">
+    <link itemprop="mainEntityOfPage" href="http://VictoryDefeat.github.io/算法导论——模拟退火/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Victory_Defeat">
@@ -255,7 +257,7 @@
       <meta itemprop="name" content="I am the weakest!">
     </span>
       <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">题解P1636【Einstein学画画】
+        <h1 class="post-title" itemprop="name headline">算法导论——模拟退火
 
           
         </h1>
@@ -271,7 +273,7 @@
                 
               
 
-              <time title="创建时间：2019-08-22 15:02:31 / 修改时间：15:13:42" itemprop="dateCreated datePublished" datetime="2019-08-22T15:02:31+08:00">2019-08-22</time>
+              <time title="创建时间：2019-08-22 15:17:15 / 修改时间：15:17:39" itemprop="dateCreated datePublished" datetime="2019-08-22T15:17:15+08:00">2019-08-22</time>
             </span>
           
             
@@ -296,7 +298,7 @@
               
                 <span class="post-meta-item-text">本文字数：</span>
               
-              <span>1k</span>
+              <span>2.2k</span>
             </span>
           
             <span class="post-meta-item" title="阅读时长">
@@ -306,7 +308,7 @@
               
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
               
-              <span>1 分钟</span>
+              <span>2 分钟</span>
             </span>
           
 
@@ -319,13 +321,63 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>虽然跟楼上各位写得差不多，但是！</p><h1 id="我使用了无敌的位运算！"><a href="#我使用了无敌的位运算！" class="headerlink" title="我使用了无敌的位运算！"></a>我使用了<del>无敌</del>的位运算！</h1><p>其实很简单（没什么用……）</p><p>在此，先解释一下按位与（&amp;）：,a&amp;b是指将a，b分别转为二进制，然后逐位比较，如两者的同位皆为1，则结果的该位为1，否则为0。</p><a id="more"></a>
+        <p>今天来说一个<strong>玄学</strong>算法：模拟退火！（真·玄学）</p><p>先说一说它的名称来源：<a href="https://baike.baidu.com/item/%E9%80%80%E7%81%AB/1039313" target="_blank" rel="noopener">$Link$</a></p><blockquote>
+<p>退火是一种金属热处理工艺，指的是将金属缓慢加热到一定温度，保持足够时间，然后以适宜速度冷却。……</p>
+</blockquote><a id="more"></a>
 
 
-<p>那么，可以看出%2为1的数二进制末尾必为1，否则必为0，1&amp;1为1,0&amp;1为0，那么该数&amp;1的结果即可判断奇偶性。</p>
-<h1 id="综上所述：a-amp-1-1，a为奇数，否则，a为偶数"><a href="#综上所述：a-amp-1-1，a为奇数，否则，a为偶数" class="headerlink" title="综上所述：a&amp;1=1，a为奇数，否则，a为偶数"></a>综上所述：a&amp;1=1，a为奇数，否则，a为偶数</h1><p><del>位运算大法好！！！</del></p>
-<p>闲话不多说，下面奉上代码：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstdio&gt;//位运算大法好 </span></span></span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">read</span><span class="params">(<span class="keyword">int</span> &amp;a)</span><span class="comment">//快速读入 </span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> k=<span class="number">1</span>;<span class="comment">//系数 </span></span><br><span class="line">    <span class="keyword">char</span> c=getchar();a=<span class="number">0</span>;<span class="comment">//定义字符，并进行第一次读入 </span></span><br><span class="line">    <span class="keyword">while</span>(c&lt;<span class="string">'0'</span>||c&gt;<span class="string">'9'</span>)&#123;<span class="keyword">if</span>(c==<span class="string">'-'</span>)k=<span class="number">-1</span>;c=getchar();&#125;<span class="comment">//如果不为数字，继续读入，特判：如为-号，系数变为-1 </span></span><br><span class="line">    <span class="keyword">while</span>(c&gt;=<span class="string">'0'</span>&amp;&amp;c&lt;=<span class="string">'9'</span>)&#123;a=a*<span class="number">10</span>+c-<span class="string">'0'</span>;c=getchar();&#125;<span class="comment">//如果是数字，需将变量*10+当前数字 </span></span><br><span class="line">    a*=k;<span class="comment">//乘上系数 </span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">int</span> s,n,m,a,b,f[<span class="number">1010</span>];<span class="comment">//定义变量，s为度为奇数点总数，n，m变量见题意，a，b是读入的边的两端点，f数组统计点度数 </span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    read(n);read(m);<span class="comment">//懒得解释 </span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=m;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        read(a);read(b);<span class="comment">//读入 </span></span><br><span class="line">        f[a]++;</span><br><span class="line">        f[b]++;<span class="comment">//两点的度+1 </span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)<span class="keyword">if</span>(f[i]&amp;<span class="number">1</span>)s++;<span class="comment">//如果当前点度为奇数，s++ </span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"%d"</span>,s?s/<span class="number">2</span>:<span class="number">1</span>);<span class="comment">//输出s/2（s=0时输出1）（其中s为0或2时，能一笔画，故输出结果为1，这样快一些，又短） </span></span><br><span class="line">    <span class="comment">//注意：这里使用了位运算！具体方法见上面说明！ </span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这貌似和$OI$毫无关系啊……，再看看模拟退火？<a href="https://baike.baidu.com/item/%E6%A8%A1%E6%8B%9F%E9%80%80%E7%81%AB" target="_blank" rel="noopener">$Link$</a></p>
+<blockquote>
+<p>模拟退火（$Simulate Anneal$，$SA$）的出发点是基于物理中固体物质的退火过程与一般组合优化问题之间的相似性。模拟退火算法是一种通用的优化算法，其物理退火过程由加温过程、等温过程、冷却过程这三部分组成。</p>
+</blockquote>
+<p>这……还真有关系，而且就是<strong>思路</strong></p>
+<p>下面解释一下模拟退火的几个<strong>特点</strong>：</p>
+<ol>
+<li><p><del>非酋不建议使用，看脸</del> 选一个好的<strong>随机种子</strong>很重要，当然<code>srand(time(NULL))</code>也可以（本人使用）</p>
+</li>
+<li><p>日常<strong>调参</strong>（降温系数，初温，末温，次数）</p>
+</li>
+<li><p>如果当前值更优，则<strong>无条件</strong>将当前值作为最优解，并接受，否则<strong>以一定概率</strong>接受当前值（概率与温度有关）</p>
+</li>
+<li><p>一次难以出正解 <del>欧皇除外</del></p>
+</li>
+</ol>
+<p>下面附图，便于理解：</p>
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/d/d5/Hill_Climbing_with_Simulated_Annealing.gif" alt></p>
+<p>看得出，高温时答案会不断跳动</p>
+<p>但随着温度降低，逐渐在最优解附近稳定</p>
+<p>（当然，正常情况下，常会误入歧途，跑到次优解去了）</p>
+<p>步骤：</p>
+<ol>
+<li><p>随机选一个</p>
+</li>
+<li><p>如果当前值更优，则<strong>无条件</strong>将当前值作为最优解，并接受，否则<strong>以一定概率</strong>接受当前值（概率与温度有关）</p>
+</li>
+<li><p>降温，如果温度低于末温，结束</p>
+</li>
+</ol>
+<p>附常用参数：</p>
+<p>降温系数 $0.993$ ~ $0.998$</p>
+<p>初温 $2000$ ~ $5000$</p>
+<p>末温 $1e-13$ ~ $1e-17$</p>
+<p>次数 $3$ ~ $20$</p>
+<p>对于调参：</p>
+<p>如果您<del>脸黑</del>没有$AC$，可以调大初温或调小末温</p>
+<p>如果您时间充裕，也可以多跑几次或者调大降温系数</p>
+<p>附上本人<a href="https://www.luogu.org/problem/P1337" target="_blank" rel="noopener">P1337[JSOI2004]平衡点/吊打XXX</a>AC代码：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> cold 0.997</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> temperature 3000</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> lastemp 1e-15</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> times 3</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> INF 1&lt;&lt;30</span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">node</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="keyword">int</span> x,y,w;</span><br><span class="line">&#125;a[<span class="number">1001</span>];</span><br><span class="line"><span class="keyword">int</span> n;</span><br><span class="line"><span class="keyword">double</span> t,tx,ty,tw,ansx,ansy,anse;</span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">energy</span><span class="params">(<span class="keyword">double</span> x,<span class="keyword">double</span> y)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">double</span> e=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;++i)</span><br><span class="line">	&#123;</span><br><span class="line">        tx=x-a[i].x;</span><br><span class="line">        ty=y-a[i].y;</span><br><span class="line">        tw=a[i].w;</span><br><span class="line">        e+=<span class="built_in">sqrt</span>(tx*tx+ty*ty)*tw ;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> e;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">SA</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    t=temperature;</span><br><span class="line">    <span class="keyword">while</span>(t&gt;lastemp)</span><br><span class="line">	&#123;</span><br><span class="line">        <span class="keyword">double</span> nx=ansx+((rand()*<span class="number">2</span>)-RAND_MAX)*t;</span><br><span class="line">        <span class="keyword">double</span> ny=ansy+((rand()*<span class="number">2</span>)-RAND_MAX)*t;</span><br><span class="line">        <span class="keyword">double</span> ne=energy(nx,ny);</span><br><span class="line">        <span class="keyword">if</span>(ne&lt;anse)ansx=nx,ansy=ny,anse=ne;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(<span class="built_in">exp</span>((anse-ne)/t)*RAND_MAX&gt;rand())ansx=nx,ansy=ny;</span><br><span class="line">        t*=cold;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    srand(time(<span class="literal">NULL</span>));</span><br><span class="line">    <span class="built_in">cin</span>&gt;&gt;n;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;++i)</span><br><span class="line">	&#123;</span><br><span class="line">        <span class="built_in">cin</span>&gt;&gt;a[i].x&gt;&gt;a[i].y&gt;&gt;a[i].w;</span><br><span class="line">        ansx+=a[i].x;</span><br><span class="line">        ansy+=a[i].y;</span><br><span class="line">    &#125;</span><br><span class="line">    ansx/=n;</span><br><span class="line">    ansy/=n;</span><br><span class="line">    anse=energy(ansx,ansy);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=times;++i)SA();</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"%.3lf %.3lf"</span>,ansx,ansy);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>跑得稍微有点慢，共计$1200ms$多，但都每个点不超过$400ms$，如果有巨佬有更优参数可以在评论里告诉我（该题某篇题解参数亲测不行）</p>
+<p>一些问题与回答</p>
+<p>$Q$：如果调参调到极限还是不能$AC$怎么办？</p>
+<p>$A$：<del>您太非了</del> 试试多交几次或者换个随机种子</p>
+<p>（随机种子例子：$19<strong>**17$，$233333$，$114</strong> *$）</p>
+<p>$Q$：怎么调参？</p>
+<p>$A$：<del>看心情</del> 在保证$AC$的情况下，尽量调小一些</p>
+<p>$Q$：如果无论如何都$AC$不了呢？</p>
+<p>$A$：<del>您可以去非洲了</del> （叹气）您还是去打正解吧</p>
+<p>习题：<a href="https://www.luogu.org/problem/P2503" target="_blank" rel="noopener">P2503[HAOI2006]均分数据</a></p>
+<p>（闲话：模拟退火英文名$SA$，即$Simulate Anneal$，就是模拟+退火）</p>
+
     </div>
 
     
@@ -340,7 +392,7 @@
           
           <div class="post-tags">
             
-              <a href="/tags/题解/" rel="tag"># 题解</a>
+              <a href="/tags/算法导论/" rel="tag"># 算法导论</a>
             
           </div>
         
@@ -350,8 +402,8 @@
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
               
-                <a href="/题解P2036【Perket】/" rel="next" title="题解P2036【Perket】">
-                  <i class="fa fa-chevron-left"></i> 题解P2036【Perket】
+                <a href="/天选之子v1-7-2/" rel="next" title="天选之子v1.7.2">
+                  <i class="fa fa-chevron-left"></i> 天选之子v1.7.2
                 </a>
               
             </div>
@@ -359,10 +411,6 @@
             <span class="post-nav-divider"></span>
 
             <div class="post-nav-prev post-nav-item">
-              
-                <a href="/天选之子v1-7-2/" rel="prev" title="天选之子v1.7.2">
-                  天选之子v1.7.2 <i class="fa fa-chevron-right"></i>
-                </a>
               
             </div>
           </div>
@@ -411,10 +459,6 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc">
-            <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#我使用了无敌的位运算！"><span class="nav-number">1.</span> <span class="nav-text">我使用了无敌的位运算！</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#综上所述：a-amp-1-1，a为奇数，否则，a为偶数"><span class="nav-number">2.</span> <span class="nav-text">综上所述：a&amp;1=1，a为奇数，否则，a为偶数</span></a></li></ol></div>
-          </div>
-        
       </div>
       <!--/noindex-->
 
