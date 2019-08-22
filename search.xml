@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title><![CDATA[Hello!]]></title>
+    <url>%2F2019%2F08%2F22%2FHello%2F</url>
+    <content type="text"><![CDATA[这是我的第一篇文章$test$]]></content>
+      <tags>
+        <tag>其他</tag>
+      </tags>
+  </entry>
+</search>
