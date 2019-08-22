@@ -3,7 +3,7 @@
   <entry>
     <title><![CDATA[Hello!]]></title>
     <url>%2F2019%2F08%2F22%2FHello%2F</url>
-    <content type="text"><![CDATA[这是我的第一篇文章$test$]]></content>
+    <content type="text"><![CDATA[这是我的第一篇博客123456#include&lt;bits/stdc++.h&gt;int main()&#123; printf("Hello World!"); return 0;&#125; $\text{HelloWorld!}$ Hello!]]></content>
       <tags>
         <tag>其他</tag>
       </tags>
