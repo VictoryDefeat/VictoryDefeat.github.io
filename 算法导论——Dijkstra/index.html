@@ -62,7 +62,7 @@
 <meta property="og:site_name" content="Victory_Defeat&#39;s Blog">
 <meta property="og:description" content="各位久等了！算法导论复活了 虽说有了洛谷日报，我这也没啥用了咳咳，不说废话，直接进入主题！$Dijkstra$是单源最短路的一种算法（以下简称$Dij$），其本质是贪心，因此不能解决负边权问题（叹气）">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-08-23T06:12:45.441Z">
+<meta property="og:updated_time" content="2019-08-23T06:15:06.915Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="算法导论——Dijkstra">
 <meta name="twitter:description" content="各位久等了！算法导论复活了 虽说有了洛谷日报，我这也没啥用了咳咳，不说废话，直接进入主题！$Dijkstra$是单源最短路的一种算法（以下简称$Dij$），其本质是贪心，因此不能解决负边权问题（叹气）">
@@ -271,7 +271,7 @@
                 
               
 
-              <time title="创建时间：2019-08-23 14:10:50 / 修改时间：14:12:45" itemprop="dateCreated datePublished" datetime="2019-08-23T14:10:50+08:00">2019-08-23</time>
+              <time title="创建时间：2019-08-23 14:10:50 / 修改时间：14:15:06" itemprop="dateCreated datePublished" datetime="2019-08-23T14:10:50+08:00">2019-08-23</time>
             </span>
           
             
@@ -296,7 +296,7 @@
               
                 <span class="post-meta-item-text">本文字数：</span>
               
-              <span>930</span>
+              <span>932</span>
             </span>
           
             <span class="post-meta-item" title="阅读时长">
@@ -354,7 +354,7 @@
 <p>例如：堆中有点$(1,2),(1,3),(2,3)$</p>
 <p>此时$dis[1]=2,dis[2]=3$</p>
 <p>在第二次操作时，会发现$dis[1]!=3$，那么，我们就<strong>懒惰删除</strong>，跳过它！</p>
-<p>至于堆的实现，可以使用$STL$的$priority_queue$来代替<br><del>（您如果想手写堆，我也不拦着您）</del></p>
+<p>至于堆的实现，可以使用$STL$的$priority$_$queue$来代替<br><del>（您如果想手写堆，我也不拦着您）</del></p>
 <p>注：这题不能用邻接矩阵！！！要用链式前向星（参见<a href="https://www.luogu.org/blog/Victory-Defeat/suan-fa-dao-lun-spfa" target="_blank" rel="noopener">$SPFA$</a>）</p>
 <p>复杂度分析：对于每个点，删除，插入，取出操作均为$\log n$，每条边也是$\log n$，因此总复杂度为$O((n+m)\log n)$</p>
 <p>所以计算一下：最坏情况约为$5000000$左右，建议加个快读，不然……</p>
