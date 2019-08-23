@@ -54,19 +54,19 @@
   };
 </script>
 
-  <meta name="description" content="这题一看就是典型的DFS，而且也不难，一开始暴力做了一遍60分，后来DFS一遍就AC了。（搜索面积，只不过在常规上加了一个for循环）">
-<meta name="keywords" content="题解">
+  <meta name="description" content="各位久等了！算法导论复活了 虽说有了洛谷日报，我这也没啥用了咳咳，不说废话，直接进入主题！$Dijkstra$是单源最短路的一种算法（以下简称$Dij$），其本质是贪心，因此不能解决负边权问题（叹气）">
+<meta name="keywords" content="算法导论">
 <meta property="og:type" content="article">
-<meta property="og:title" content="题解P2666【Bessie的秘密牧场】">
-<meta property="og:url" content="http://VictoryDefeat.github.io/题解P2666【Bessie的秘密牧场】/index.html">
+<meta property="og:title" content="算法导论——Dijkstra">
+<meta property="og:url" content="http://VictoryDefeat.github.io/算法导论——Dijkstra/index.html">
 <meta property="og:site_name" content="Victory_Defeat&#39;s Blog">
-<meta property="og:description" content="这题一看就是典型的DFS，而且也不难，一开始暴力做了一遍60分，后来DFS一遍就AC了。（搜索面积，只不过在常规上加了一个for循环）">
+<meta property="og:description" content="各位久等了！算法导论复活了 虽说有了洛谷日报，我这也没啥用了咳咳，不说废话，直接进入主题！$Dijkstra$是单源最短路的一种算法（以下简称$Dij$），其本质是贪心，因此不能解决负边权问题（叹气）">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-08-22T07:19:43.388Z">
+<meta property="og:updated_time" content="2019-08-23T06:12:45.441Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="题解P2666【Bessie的秘密牧场】">
-<meta name="twitter:description" content="这题一看就是典型的DFS，而且也不难，一开始暴力做了一遍60分，后来DFS一遍就AC了。（搜索面积，只不过在常规上加了一个for循环）">
-  <link rel="canonical" href="http://VictoryDefeat.github.io/题解P2666【Bessie的秘密牧场】/">
+<meta name="twitter:title" content="算法导论——Dijkstra">
+<meta name="twitter:description" content="各位久等了！算法导论复活了 虽说有了洛谷日报，我这也没啥用了咳咳，不说废话，直接进入主题！$Dijkstra$是单源最短路的一种算法（以下简称$Dij$），其本质是贪心，因此不能解决负边权问题（叹气）">
+  <link rel="canonical" href="http://VictoryDefeat.github.io/算法导论——Dijkstra/">
 
 
 <script id="page-configurations">
@@ -80,7 +80,7 @@
   };
 </script>
 
-  <title>题解P2666【Bessie的秘密牧场】 | Victory_Defeat's Blog</title>
+  <title>算法导论——Dijkstra | Victory_Defeat's Blog</title>
   <meta name="generator" content="Hexo 3.9.0">
   
 
@@ -243,7 +243,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://VictoryDefeat.github.io/题解P2666【Bessie的秘密牧场】/">
+    <link itemprop="mainEntityOfPage" href="http://VictoryDefeat.github.io/算法导论——Dijkstra/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Victory_Defeat">
@@ -255,7 +255,7 @@
       <meta itemprop="name" content="Victory_Defeat's Blog">
     </span>
       <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">题解P2666【Bessie的秘密牧场】
+        <h1 class="post-title" itemprop="name headline">算法导论——Dijkstra
 
           
         </h1>
@@ -271,7 +271,7 @@
                 
               
 
-              <time title="创建时间：2019-08-22 15:00:26 / 修改时间：15:19:43" itemprop="dateCreated datePublished" datetime="2019-08-22T15:00:26+08:00">2019-08-22</time>
+              <time title="创建时间：2019-08-23 14:10:50 / 修改时间：14:12:45" itemprop="dateCreated datePublished" datetime="2019-08-23T14:10:50+08:00">2019-08-23</time>
             </span>
           
             
@@ -296,7 +296,7 @@
               
                 <span class="post-meta-item-text">本文字数：</span>
               
-              <span>656</span>
+              <span>930</span>
             </span>
           
             <span class="post-meta-item" title="阅读时长">
@@ -319,8 +319,48 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="这题一看就是典型的DFS，而且也不难，一开始暴力做了一遍60分，后来DFS一遍就AC了。（搜索面积，只不过在常规上加了一个for循环）"><a href="#这题一看就是典型的DFS，而且也不难，一开始暴力做了一遍60分，后来DFS一遍就AC了。（搜索面积，只不过在常规上加了一个for循环）" class="headerlink" title="这题一看就是典型的DFS，而且也不难，一开始暴力做了一遍60分，后来DFS一遍就AC了。（搜索面积，只不过在常规上加了一个for循环）"></a>这题一看就是典型的DFS，而且也不难，一开始暴力做了一遍60分，后来DFS一遍就AC了。（搜索面积，只不过在常规上加了一个for循环）</h1><a id="more"></a><h1 id="下面送上DFS的简单AC代码：（1764ms，有点慢）"><a href="#下面送上DFS的简单AC代码：（1764ms，有点慢）" class="headerlink" title="下面送上DFS的简单AC代码：（1764ms，有点慢）"></a>下面送上DFS的简单AC代码：（1764ms，有点慢）</h1><p><del>抵抗打表，推崇深搜！</del></p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cmath&gt;</span></span></span><br><span class="line"><span class="keyword">int</span> n,z;<span class="comment">//z为方案总数，n见题意 </span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">DFS</span><span class="params">(<span class="keyword">int</span> x,<span class="keyword">int</span> s)</span><span class="comment">//x表示当前已搜索的块数，s表示目前的总面积</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(x==<span class="number">4</span>)<span class="keyword">if</span>(s==n)z++;<span class="keyword">else</span>;<span class="comment">//如果已搜索4块而且目前总面积正好为n，方案数+1，else；是为了让下一个else与前一个if配对（典型的空语句应用，也可用if(x==4)&#123;if(s==n)z++;&#125;来表示）</span></span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;=<span class="built_in">sqrt</span>(n);i++)DFS(x+<span class="number">1</span>,s+i*i);<span class="comment">//i循环从0到根号n，（i为边长，因为可以有周长为0的草皮），每次搜索下一个，当前总面积加上i的平方，看了其他题解，是先加上，递归完了再减，不如这样直接作为形参来得方便（不过好像慢一点？不存在的！）</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;n);<span class="comment">//输入 </span></span><br><span class="line">    DFS(<span class="number">0</span>,<span class="number">0</span>);<span class="comment">//初始未搜索，一开始一共搜索0块，总面积当然也为0 </span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"%d"</span>,z);<span class="comment">//输出 </span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        <p>各位久等了！算法导论复活了 <del>虽说有了洛谷日报，我这也没啥用了</del></p><p>咳咳，不说废话，直接进入主题！</p><p>$Dijkstra$是单源最短路的一种算法（以下简称$Dij$），其本质是<strong>贪心</strong>，因此<strong>不能解决负边权</strong>问题（叹气）</p><a id="more"></a>
+
+
+<p>具体思路如下：</p>
+<ol>
+<li><p>定义变量：$s$起点，$dis[i]$表示起点到$i$的最短距离,$map[i][j]$表示边$i,j$的权值，$vis[i]$表示$i$是否被访问</p>
+</li>
+<li><p>将$map[i][j]$初始化为$INF$，$map[i][i]=0$</p>
+</li>
+<li><p>读入，并加边</p>
+</li>
+<li><p>$dis[s]=0$，将$dis$更新一遍（不可到达点为$INF$）</p>
+</li>
+<li><p>找到距<strong>初始点</strong>最近的<strong>未访问</strong>点$t$，记录为访问</p>
+</li>
+<li><p><strong>松弛</strong>（以$t$为中间点）：$dis[i]=\min(dis[i],dis[t]+map[t][i])$</p>
+</li>
+<li><p>重复$n$遍步骤$5$</p>
+</li>
+<li><p>输出答案即可</p>
+</li>
+</ol>
+<p>可以看出，$Dij$的时间复杂度是$O(n^2)$，理论上慢于$SPFA$，至于实际嘛……</p>
+<p>对于<strong>菊花图</strong>这类恶心的卡$SPFA$的图，$Dij$可以轻松跑过，不过对于<a href="https://www.luogu.org/problem/P4779" target="_blank" rel="noopener">P4779</a>还是远远不够的！</p>
+<p>下面，进阶操作来了：</p>
+<p><strong>$Dij$的堆优化</strong>！！！</p>
+<p>观察步骤$5$，发现查找这一点可以利用<strong>堆维护$dis$数组</strong>，每次取出堆顶即可</p>
+<p>有同学发问了：可是这样就不能判断<strong>是否未访问了</strong>！</p>
+<p>不错，但我们可以不停地把堆顶访问过的删掉，直到堆顶是未访问过的</p>
+<p>有同学又发问了：可是这样会有重复节点啊！</p>
+<p>很好，接下来我们需要引入一个概念：<strong>懒惰删除</strong></p>
+<p>这是指不删除节点，而直接跳过该节点的操作</p>
+<p>例如：堆中有点$(1,2),(1,3),(2,3)$</p>
+<p>此时$dis[1]=2,dis[2]=3$</p>
+<p>在第二次操作时，会发现$dis[1]!=3$，那么，我们就<strong>懒惰删除</strong>，跳过它！</p>
+<p>至于堆的实现，可以使用$STL$的$priority_queue$来代替<br><del>（您如果想手写堆，我也不拦着您）</del></p>
+<p>注：这题不能用邻接矩阵！！！要用链式前向星（参见<a href="https://www.luogu.org/blog/Victory-Defeat/suan-fa-dao-lun-spfa" target="_blank" rel="noopener">$SPFA$</a>）</p>
+<p>复杂度分析：对于每个点，删除，插入，取出操作均为$\log n$，每条边也是$\log n$，因此总复杂度为$O((n+m)\log n)$</p>
+<p>所以计算一下：最坏情况约为$5000000$左右，建议加个快读，不然……</p>
+<p>这样就能$AC P4779$了！</p>
+<p>代码实现：</p>
+<p><del>略</del> 参见<a href="https://www.luogu.org/problemnew/solution/P4779" target="_blank" rel="noopener">P4779题解（个人建议第二篇）</a></p>
 
     </div>
 
@@ -336,7 +376,7 @@
           
           <div class="post-tags">
             
-              <a href="/tags/题解/" rel="tag"># 题解</a>
+              <a href="/tags/算法导论/" rel="tag"># 算法导论</a>
             
           </div>
         
@@ -346,8 +386,8 @@
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
               
-                <a href="/Hello/" rel="next" title="Hello!">
-                  <i class="fa fa-chevron-left"></i> Hello!
+                <a href="/算法导论——模拟退火/" rel="next" title="算法导论——模拟退火">
+                  <i class="fa fa-chevron-left"></i> 算法导论——模拟退火
                 </a>
               
             </div>
@@ -355,10 +395,6 @@
             <span class="post-nav-divider"></span>
 
             <div class="post-nav-prev post-nav-item">
-              
-                <a href="/题解P2036【Perket】/" rel="prev" title="题解P2036【Perket】">
-                  题解P2036【Perket】 <i class="fa fa-chevron-right"></i>
-                </a>
               
             </div>
           </div>
@@ -407,10 +443,6 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc">
-            <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#这题一看就是典型的DFS，而且也不难，一开始暴力做了一遍60分，后来DFS一遍就AC了。（搜索面积，只不过在常规上加了一个for循环）"><span class="nav-number">1.</span> <span class="nav-text">这题一看就是典型的DFS，而且也不难，一开始暴力做了一遍60分，后来DFS一遍就AC了。（搜索面积，只不过在常规上加了一个for循环）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#下面送上DFS的简单AC代码：（1764ms，有点慢）"><span class="nav-number">2.</span> <span class="nav-text">下面送上DFS的简单AC代码：（1764ms，有点慢）</span></a></li></ol></div>
-          </div>
-        
       </div>
       <!--/noindex-->
 
