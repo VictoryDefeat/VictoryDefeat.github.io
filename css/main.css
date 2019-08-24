@@ -1722,7 +1722,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #63b6ff;
+  background: #ff9;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
@@ -2766,7 +2766,7 @@ ul.breadcrumb li+li:last-child {
   white-space: nowrap;
 }
 .content-wrap {
-  background: initial;
+  background: none;
   border-radius: initial;
   box-shadow: initial;
   padding: initial;
@@ -2783,7 +2783,7 @@ ul.breadcrumb li+li:last-child {
   margin-top: 12px;
 }
 .comments {
-  background: #fff;
+  background: none;
   border-radius: initial;
   box-shadow: 0 2px 2px 0 rgba(0,0,0,0.12), 0 3px 1px -2px rgba(0,0,0,0.06), 0 1px 5px 0 rgba(0,0,0,0.12), 0 -1px 0.5px 0 rgba(0,0,0,0.09);
   margin: auto;
@@ -2809,7 +2809,7 @@ ul.breadcrumb li+li:last-child {
   display: none;
 }
 .pagination {
-  background: #fff;
+  background: none;
   border-radius: initial;
   border-top: initial;
   box-shadow: 0 2px 2px 0 rgba(0,0,0,0.12), 0 3px 1px -2px rgba(0,0,0,0.06), 0 1px 5px 0 rgba(0,0,0,0.12), 0 -1px 0.5px 0 rgba(0,0,0,0.09);
