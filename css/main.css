@@ -1639,6 +1639,16 @@ pre .javascript .function {
   align-self: center;
   height: 30px;
 }
+.post-body p a {
+  color: #08d9fc;
+  border-bottom: none;
+  border-bottom: 1px solid #08d9fc;
+}
+.post-body p a:hover {
+  color: #fa3bee;
+  border-bottom: none;
+  border-bottom: 1px solid #fa3bee;
+}
 .sidebar {
   background: #222;
   bottom: 0;
@@ -1722,7 +1732,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #f06f73;
+  background: #6191d0;
   border-radius: 50%;
   content: ' ';
   display: inline-block;

@@ -71,19 +71,19 @@
     }
 </style>
 
-  <meta name="description" content="各位久等了！算法导论复活了 虽说有了洛谷日报，我这也没啥用了咳咳，不说废话，直接进入主题！$Dijkstra$是单源最短路的一种算法（以下简称$Dij$），其本质是贪心，因此不能解决负边权问题（叹气）">
-<meta name="keywords" content="算法导论">
+  <meta name="description" content="@剑圣夜雨声烦 @林则徐左宗棠 @犇字怎么打 @AK47 @QAQ永动机 @空界_无尽 @louis_zhq">
+<meta name="keywords" content="其他">
 <meta property="og:type" content="article">
-<meta property="og:title" content="算法导论——Dijkstra">
-<meta property="og:url" content="http://VictoryDefeat.github.io/算法导论——Dijkstra/index.html">
+<meta property="og:title" content="列表">
+<meta property="og:url" content="http://VictoryDefeat.github.io/列表/index.html">
 <meta property="og:site_name" content="Victory_Defeat&#39;s Blog">
-<meta property="og:description" content="各位久等了！算法导论复活了 虽说有了洛谷日报，我这也没啥用了咳咳，不说废话，直接进入主题！$Dijkstra$是单源最短路的一种算法（以下简称$Dij$），其本质是贪心，因此不能解决负边权问题（叹气）">
+<meta property="og:description" content="@剑圣夜雨声烦 @林则徐左宗棠 @犇字怎么打 @AK47 @QAQ永动机 @空界_无尽 @louis_zhq">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-08-23T06:15:06.915Z">
+<meta property="og:updated_time" content="2019-08-24T08:49:44.380Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="算法导论——Dijkstra">
-<meta name="twitter:description" content="各位久等了！算法导论复活了 虽说有了洛谷日报，我这也没啥用了咳咳，不说废话，直接进入主题！$Dijkstra$是单源最短路的一种算法（以下简称$Dij$），其本质是贪心，因此不能解决负边权问题（叹气）">
-  <link rel="canonical" href="http://VictoryDefeat.github.io/算法导论——Dijkstra/">
+<meta name="twitter:title" content="列表">
+<meta name="twitter:description" content="@剑圣夜雨声烦 @林则徐左宗棠 @犇字怎么打 @AK47 @QAQ永动机 @空界_无尽 @louis_zhq">
+  <link rel="canonical" href="http://VictoryDefeat.github.io/列表/">
 
 
 <script id="page-configurations">
@@ -97,7 +97,7 @@
   };
 </script>
 
-  <title>算法导论——Dijkstra | Victory_Defeat's Blog</title>
+  <title>列表 | Victory_Defeat's Blog</title>
   <meta name="generator" content="Hexo 3.9.0">
   
 
@@ -260,7 +260,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://VictoryDefeat.github.io/算法导论——Dijkstra/">
+    <link itemprop="mainEntityOfPage" href="http://VictoryDefeat.github.io/列表/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Victory_Defeat">
@@ -272,7 +272,7 @@
       <meta itemprop="name" content="Victory_Defeat's Blog">
     </span>
       <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">算法导论——Dijkstra
+        <h1 class="post-title" itemprop="name headline">列表
 
           
         </h1>
@@ -288,11 +288,19 @@
                 
               
 
-              <time title="创建时间：2019-08-23 14:10:50 / 修改时间：14:15:06" itemprop="dateCreated datePublished" datetime="2019-08-23T14:10:50+08:00">2019-08-23</time>
+              <time title="创建时间：2019-08-22 15:15:38" itemprop="dateCreated datePublished" datetime="2019-08-22T15:15:38+08:00">2019-08-22</time>
             </span>
           
             
 
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-08-24 16:49:44" itemprop="dateModified" datetime="2019-08-24T16:49:44+08:00">2019-08-24</time>
+              </span>
             
           
 
@@ -313,7 +321,7 @@
               
                 <span class="post-meta-item-text">本文字数：</span>
               
-              <span>932</span>
+              <span>63</span>
             </span>
           
             <span class="post-meta-item" title="阅读时长">
@@ -336,48 +344,14 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>各位久等了！算法导论复活了 <del>虽说有了洛谷日报，我这也没啥用了</del></p><p>咳咳，不说废话，直接进入主题！</p><p>$Dijkstra$是单源最短路的一种算法（以下简称$Dij$），其本质是<strong>贪心</strong>，因此<strong>不能解决负边权</strong>问题（叹气）</p><a id="more"></a>
+        <p>@剑圣夜雨声烦 </p><p>@林则徐左宗棠 </p><p>@犇字怎么打 </p><p>@AK47 </p><p>@QAQ永动机 </p><p>@空界_无尽 </p><p>@louis_zhq </p><a id="more"></a>
 
 
-<p>具体思路如下：</p>
-<ol>
-<li><p>定义变量：$s$起点，$dis[i]$表示起点到$i$的最短距离,$map[i][j]$表示边$i,j$的权值，$vis[i]$表示$i$是否被访问</p>
-</li>
-<li><p>将$map[i][j]$初始化为$INF$，$map[i][i]=0$</p>
-</li>
-<li><p>读入，并加边</p>
-</li>
-<li><p>$dis[s]=0$，将$dis$更新一遍（不可到达点为$INF$）</p>
-</li>
-<li><p>找到距<strong>初始点</strong>最近的<strong>未访问</strong>点$t$，记录为访问</p>
-</li>
-<li><p><strong>松弛</strong>（以$t$为中间点）：$dis[i]=\min(dis[i],dis[t]+map[t][i])$</p>
-</li>
-<li><p>重复$n$遍步骤$5$</p>
-</li>
-<li><p>输出答案即可</p>
-</li>
-</ol>
-<p>可以看出，$Dij$的时间复杂度是$O(n^2)$，理论上慢于$SPFA$，至于实际嘛……</p>
-<p>对于<strong>菊花图</strong>这类恶心的卡$SPFA$的图，$Dij$可以轻松跑过，不过对于<a href="https://www.luogu.org/problem/P4779" target="_blank" rel="noopener">P4779</a>还是远远不够的！</p>
-<p>下面，进阶操作来了：</p>
-<p><strong>$Dij$的堆优化</strong>！！！</p>
-<p>观察步骤$5$，发现查找这一点可以利用<strong>堆维护$dis$数组</strong>，每次取出堆顶即可</p>
-<p>有同学发问了：可是这样就不能判断<strong>是否未访问了</strong>！</p>
-<p>不错，但我们可以不停地把堆顶访问过的删掉，直到堆顶是未访问过的</p>
-<p>有同学又发问了：可是这样会有重复节点啊！</p>
-<p>很好，接下来我们需要引入一个概念：<strong>懒惰删除</strong></p>
-<p>这是指不删除节点，而直接跳过该节点的操作</p>
-<p>例如：堆中有点$(1,2),(1,3),(2,3)$</p>
-<p>此时$dis[1]=2,dis[2]=3$</p>
-<p>在第二次操作时，会发现$dis[1]!=3$，那么，我们就<strong>懒惰删除</strong>，跳过它！</p>
-<p>至于堆的实现，可以使用$STL$的$priority$_$queue$来代替<br><del>（您如果想手写堆，我也不拦着您）</del></p>
-<p>注：这题不能用邻接矩阵！！！要用链式前向星（参见<a href="https://www.luogu.org/blog/Victory-Defeat/suan-fa-dao-lun-spfa" target="_blank" rel="noopener">$SPFA$</a>）</p>
-<p>复杂度分析：对于每个点，删除，插入，取出操作均为$\log n$，每条边也是$\log n$，因此总复杂度为$O((n+m)\log n)$</p>
-<p>所以计算一下：最坏情况约为$5000000$左右，建议加个快读，不然……</p>
-<p>这样就能$AC P4779$了！</p>
-<p>代码实现：</p>
-<p><del>略</del> 参见<a href="https://www.luogu.org/problemnew/solution/P4779" target="_blank" rel="noopener">P4779题解（个人建议第二篇）</a></p>
+
+
+
+
+<p>@fzhfzh </p>
 
     </div>
 
@@ -393,7 +367,7 @@
           
           <div class="post-tags">
             
-              <a href="/tags/算法导论/" rel="tag"># 算法导论</a>
+              <a href="/tags/其他/" rel="tag"># 其他</a>
             
           </div>
         
@@ -403,8 +377,8 @@
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
               
-                <a href="/算法导论——模拟退火/" rel="next" title="算法导论——模拟退火">
-                  <i class="fa fa-chevron-left"></i> 算法导论——模拟退火
+                <a href="/天选之子v1-7-2/" rel="next" title="天选之子v1.7.2">
+                  <i class="fa fa-chevron-left"></i> 天选之子v1.7.2
                 </a>
               
             </div>
@@ -413,8 +387,8 @@
 
             <div class="post-nav-prev post-nav-item">
               
-                <a href="/算法导论——总论/" rel="prev" title="算法导论——总论">
-                  算法导论——总论 <i class="fa fa-chevron-right"></i>
+                <a href="/算法导论——模拟退火/" rel="prev" title="算法导论——模拟退火">
+                  算法导论——模拟退火 <i class="fa fa-chevron-right"></i>
                 </a>
               
             </div>
