@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.3.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/hexo-32px.png?v=7.3.0">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/hexo-16px.png?v=7.3.0">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.3.0" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.3.0">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.3.0',
+    exturl: false,
+    sidebar: {"position":"right","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":true,"show_result":true,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":true},
+    bookmark: {"enable":true,"color":"#222","save":"auto"},
+    fancybox: true,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    }
+  };
+</script>
+
+<script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+<link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+
+<style>
+    .pace .pace-progress {
+        background: #08d9fc;
+        height: 3px;
+    }
+    .pace .pace-progress-inner {
+         box-shadow: 0 0 10px #08d9fc, 0 0 5px     #08d9fc; 
+    }
+    .pace .pace-activity {
+        border-top-color: #08d9fc;   
+        border-left-color: #08d9fc;   
+    }
+</style>
+
+  <meta name="description" content="0.前言相信每个入门的同学都见过这样一个题目： 给定一些整数，将它们从小到大排序后输出 同学们常常会写这样的代码：">
+<meta name="keywords" content="算法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="浅析sort">
+<meta property="og:url" content="http://victorydefeat.ml/浅析sort/index.html">
+<meta property="og:site_name" content="Victory_Defeat&#39;s Blog">
+<meta property="og:description" content="0.前言相信每个入门的同学都见过这样一个题目： 给定一些整数，将它们从小到大排序后输出 同学们常常会写这样的代码：">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://feihu.me/img/posts/stl-recursive-call-comparison.png">
+<meta property="og:image" content="https://upload.wikimedia.org/wikipedia/commons/1/1b/Sorting_heapsort_anim.gif">
+<meta property="og:image" content="https://upload.wikimedia.org/wikipedia/commons/6/6a/Sorting_quicksort_anim.gif">
+<meta property="og:updated_time" content="2019-08-28T04:37:40.709Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="浅析sort">
+<meta name="twitter:description" content="0.前言相信每个入门的同学都见过这样一个题目： 给定一些整数，将它们从小到大排序后输出 同学们常常会写这样的代码：">
+<meta name="twitter:image" content="http://feihu.me/img/posts/stl-recursive-call-comparison.png">
+  <link rel="canonical" href="http://victorydefeat.ml/浅析sort/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>浅析sort | Victory_Defeat's Blog</title>
+  <meta name="generator" content="Hexo 3.9.0">
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <div class="container use-motion">
+    <div class="headband"></div>
+<a href="https://github.com/VictoryDefeat/VictoryDefeat.github.io" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Victory_Defeat's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">QAQ</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+      
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-about">
+      
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-tags">
+      
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a href="javascript:;" class="popup-trigger">
+        
+          <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+      </li>
+    
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-wrapper">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+            
+
+          <div id="content" class="content page-post-detail">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://victorydefeat.ml/浅析sort/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Victory_Defeat">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/main.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Victory_Defeat's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">浅析sort
+
+          
+        </h1>
+
+        <div class="post-meta">
+
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2019-08-28 10:35:54 / 修改时间：12:37:40" itemprop="dateCreated datePublished" datetime="2019-08-28T10:35:54+08:00">2019-08-28</time>
+            </span>
+          
+            
+
+            
+          
+
+          
+            <span class="post-meta-item" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">本文字数：</span>
+              
+              <span>6k</span>
+            </span>
+          
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              
+              <span>5 分钟</span>
+            </span>
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="0-前言"><a href="#0-前言" class="headerlink" title="0.前言"></a>0.前言</h1><p>相信每个入门的同学都见过这样一个题目：</p><blockquote>
+<p>给定一些整数，将它们从小到大排序后输出</p>
+</blockquote><p>同学们常常会写这样的代码：</p><a id="more"></a>
+
+
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">int</span> n,a[<span class="number">1000010</span>];</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;n);</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;++i)<span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;a[i]);</span><br><span class="line">	sort(a+<span class="number">1</span>,a+<span class="number">1</span>+n);</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;n;++i)<span class="built_in">printf</span>(<span class="string">"%d "</span>,a[i]);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"%d\n"</span>,a[n]);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里的<code>sort</code>就是我们今天的主角</p>
+<p>别看它语句短小，但却无比精悍</p>
+<h1 id="1-观察"><a href="#1-观察" class="headerlink" title="1.观察"></a>1.观察</h1><p>首先，观察<code>sort</code>的来源（我这里使用了<code>VSCode</code>的速览定义功能）</p>
+<p>观察到它包含在<code>stl_algo.h</code>文件中（这一文件包含在<code>algorithm</code>头文件中）</p>
+<p>找到其定义为</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> _RandomAccessIterator&gt;</span><br><span class="line">	<span class="keyword">inline</span> <span class="keyword">void</span></span><br><span class="line">   sort(_RandomAccessIterator __first, _RandomAccessIterator __last)</span><br><span class="line">   &#123;</span><br><span class="line">     <span class="keyword">typedef</span> <span class="keyword">typename</span> iterator_traits&lt;_RandomAccessIterator&gt;::value_type</span><br><span class="line">_ValueType;</span><br><span class="line"></span><br><span class="line">     <span class="comment">// concept requirements</span></span><br><span class="line">     __glibcxx_function_requires(_Mutable_RandomAccessIteratorConcept&lt;</span><br><span class="line">    _RandomAccessIterator&gt;)</span><br><span class="line">     __glibcxx_function_requires(_LessThanComparableConcept&lt;_ValueType&gt;)</span><br><span class="line">     __glibcxx_requires_valid_range(__first, __last);</span><br><span class="line"><span class="comment">//start</span></span><br><span class="line">     <span class="keyword">if</span> (__first != __last)</span><br><span class="line">&#123;</span><br><span class="line">  <span class="built_in">std</span>::__introsort_loop(__first, __last,</span><br><span class="line">			<span class="built_in">std</span>::__lg(__last - __first) * <span class="number">2</span>);</span><br><span class="line">  <span class="built_in">std</span>::__final_insertion_sort(__first, __last);</span><br><span class="line">&#125;</span><br><span class="line">   <span class="comment">//end</span></span><br><span class="line">   &#125;<span class="comment">//这里吐槽一下C++ STL编写者的码风</span></span><br></pre></td></tr></table></figure>
+<p>看到变量是<code>_RandomAccessIterator</code>（即随机迭代器）</p>
+<p>这是个什么东西鸭？其实就是数组、<code>vector</code>、<code>deque</code>这类东西的实现方法</p>
+<p>接下来观察到其主体代码是从<code>//start</code>到<code>//end</code>的部分，前面可以不管</p>
+<h1 id="2-深入分析"><a href="#2-深入分析" class="headerlink" title="2.深入分析"></a>2.深入分析</h1><h2 id="2-1-introsort-loop"><a href="#2-1-introsort-loop" class="headerlink" title="2.1 __introsort_loop"></a>2.1 __introsort_loop</h2><p>这是个什么玩意？</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> _RandomAccessIterator, <span class="keyword">typename</span> _Size, <span class="keyword">typename</span> _Compare&gt;</span><br><span class="line">   <span class="keyword">void</span></span><br><span class="line">   __introsort_loop(_RandomAccessIterator __first,</span><br><span class="line">	     _RandomAccessIterator __last,</span><br><span class="line">	     _Size __depth_limit, _Compare __comp)</span><br><span class="line">   &#123;</span><br><span class="line">     <span class="keyword">while</span> (__last - __first &gt; <span class="keyword">int</span>(_S_threshold))<span class="comment">//5</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">if</span> (__depth_limit == <span class="number">0</span>)</span><br><span class="line">    &#123;</span><br><span class="line">      _GLIBCXX_STD_A::partial_sort(__first, __last, __last, __comp);<span class="comment">//4</span></span><br><span class="line">      <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">      <span class="comment">//1</span></span><br><span class="line">  --__depth_limit;</span><br><span class="line">  _RandomAccessIterator __cut =</span><br><span class="line">    <span class="built_in">std</span>::__unguarded_partition_pivot(__first, __last, __comp);<span class="comment">//3</span></span><br><span class="line">  <span class="built_in">std</span>::__introsort_loop(__cut, __last, __depth_limit, __comp);</span><br><span class="line">  __last = __cut;</span><br><span class="line">      <span class="comment">//2</span></span><br><span class="line">&#125;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<p>如上是其源码，发现它是一个递归结构</p>
+<h3 id="2-1-1-1到-2"><a href="#2-1-1-1到-2" class="headerlink" title="2.1.1 //1到//2"></a>2.1.1 //1到//2</h3><p>不难看出<code>//1</code>与<code>//2</code>之间正是快速排序实现</p>
+<p>然而……貌似它只处理了右区间部分？左区间怎么办呢？</p>
+<p>别急，我们来重新浏览一下：</p>
+<p>它在排完序之后把<code>cut</code>的值付给了<code>last</code></p>
+<p>然后由于它是循环，所以……下一次就是处理左区间了</p>
+<p>所以它相比于我们所写的排序优点正是此处</p>
+<p>巧妙地将递归换成了循环，虽然复杂度不变，但常数就是大幅提升了</p>
+<p>这似乎从一方面解释了<code>sort</code>比手写排序快的原因（借用一个图）：</p>
+<p><img src="http://feihu.me/img/posts/stl-recursive-call-comparison.png" alt></p>
+<h3 id="2-1-2-3"><a href="#2-1-2-3" class="headerlink" title="2.1.2 //3"></a>2.1.2 //3</h3><p>不过这并不能让快排避免退化的危机，只能解决常数问题</p>
+<p>然而<code>sort</code>似乎基本没有退化过，这是为什么呢？</p>
+<p>首先注意<code>//3</code>处（<code>pivot</code>就是常说的哨兵）</p>
+<p>这里的哨兵并没有使用<code>start</code>，<code>last</code>，<code>comp</code>中的任何一个</p>
+<p>通过持续跟踪，发现哨兵使用的是三者的中值</p>
+<p>这就从一定程度上优化了算法</p>
+<p>（据说<code>//3</code>处是分割算法，然而本人未发现其实际作用，故此处暂不分析）</p>
+<h3 id="2-1-3-4"><a href="#2-1-3-4" class="headerlink" title="2.1.3 //4"></a>2.1.3 //4</h3><p>这个<code>partial_sort</code>是什么？为什么要用它？</p>
+<p>通过调查源码，发现这个<code>partial_sort</code>就是堆排：</p>
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/1/1b/Sorting_heapsort_anim.gif" alt></p>
+<p>那么<code>depth_limit</code>是什么？有何作用？</p>
+<p>回到<code>sort</code>本体，发现<code>depth_limit</code>即$\log_2(last-first)$（亦即$\log_2n$）</p>
+<p>如果递归次数到达$\log_2n$会怎么样？</p>
+<p><strong>退化</strong>，在退化之际使用堆排来弥补，可以基本解决退化</p>
+<p>这也正是<code>sort</code>不退化的奥秘所在</p>
+<h2 id="2-2-final-insertion-sort"><a href="#2-2-final-insertion-sort" class="headerlink" title="2.2 __final_insertion_sort"></a>2.2 __final_insertion_sort</h2><p>这……终极插入排序？（雾）</p>
+<p>前面不是排好了么？要它何用？</p>
+<p>等等，回到$2.1$的<code>//5</code>处，这个<code>_S_threshold</code>是？</p>
+<p>查阅定义得，<code>_S_threshold</code>为$16$，一个常数？</p>
+<p>所以说……快排剩了最前面$16$个不排，交给插入排序？</p>
+<p>理论上就算退化复杂度也才相当于插入排序啊，为什么呢？</p>
+<p>这时就需要复习一下插排的概念了</p>
+<h3 id="2-2-1-插排复习"><a href="#2-2-1-插排复习" class="headerlink" title="2.2.1 插排复习"></a>2.2.1 插排复习</h3><p>插排原理：每一个元素通过比较，找到应插入位置</p>
+<p>其特点：<strong>最好情况（基本有序）复杂度</strong>$O(n)$</p>
+<p>这样就可以理解了，快排保证了前$16$个元素基本有序，但非完全有序</p>
+<p>所以，这样只要$O(n)$就可以排好最左边$16$个</p>
+<h3 id="2-2-2-分析"><a href="#2-2-2-分析" class="headerlink" title="2.2.2 分析"></a>2.2.2 分析</h3><p>以为这就结束了？想的太简单了</p>
+<p>观察<code>__final_insertion_sort</code>源码：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> _RandomAccessIterator, <span class="keyword">typename</span> _Compare&gt;</span><br><span class="line">    <span class="keyword">void</span></span><br><span class="line">    __final_insertion_sort(_RandomAccessIterator __first,</span><br><span class="line">			   _RandomAccessIterator __last, _Compare __comp)</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="keyword">if</span> (__last - __first &gt; <span class="keyword">int</span>(_S_threshold))</span><br><span class="line">	&#123;</span><br><span class="line">	  <span class="built_in">std</span>::__insertion_sort(__first, __first + <span class="keyword">int</span>(_S_threshold), __comp);</span><br><span class="line">	  <span class="built_in">std</span>::__unguarded_insertion_sort(__first + <span class="keyword">int</span>(_S_threshold), __last,</span><br><span class="line">					  __comp);</span><br><span class="line">	&#125;</span><br><span class="line">      <span class="keyword">else</span></span><br><span class="line">	<span class="built_in">std</span>::__insertion_sort(__first, __last, __comp);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>可以看到，又调用了两个插入排序，它们分别的代码：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> _RandomAccessIterator, <span class="keyword">typename</span> _Compare&gt;</span><br><span class="line">    <span class="keyword">void</span></span><br><span class="line">    __insertion_sort(_RandomAccessIterator __first,</span><br><span class="line">		     _RandomAccessIterator __last, _Compare __comp)</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="keyword">if</span> (__first == __last) <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">for</span> (_RandomAccessIterator __i = __first + <span class="number">1</span>; __i != __last; ++__i)</span><br><span class="line">	&#123;</span><br><span class="line">	  <span class="keyword">if</span> (__comp(*__i, *__first))</span><br><span class="line">	    &#123;</span><br><span class="line">	      <span class="keyword">typename</span> iterator_traits&lt;_RandomAccessIterator&gt;::value_type</span><br><span class="line">		__val = _GLIBCXX_MOVE(*__i);</span><br><span class="line">	      _GLIBCXX_MOVE_BACKWARD3(__first, __i, __i + <span class="number">1</span>);</span><br><span class="line">	      *__first = _GLIBCXX_MOVE(__val);</span><br><span class="line">	    &#125;</span><br><span class="line">	  <span class="keyword">else</span></span><br><span class="line">	    <span class="built_in">std</span>::__unguarded_linear_insert(__i, __comp);</span><br><span class="line">	&#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> _RandomAccessIterator, <span class="keyword">typename</span> _Compare&gt;</span><br><span class="line">   <span class="keyword">inline</span> <span class="keyword">void</span></span><br><span class="line">   __unguarded_insertion_sort(_RandomAccessIterator __first,</span><br><span class="line">		       _RandomAccessIterator __last, _Compare __comp)</span><br><span class="line">   &#123;</span><br><span class="line">     <span class="keyword">typedef</span> <span class="keyword">typename</span> iterator_traits&lt;_RandomAccessIterator&gt;::value_type</span><br><span class="line">_ValueType;</span><br><span class="line"></span><br><span class="line">     <span class="keyword">for</span> (_RandomAccessIterator __i = __first; __i != __last; ++__i)</span><br><span class="line"><span class="built_in">std</span>::__unguarded_linear_insert(__i, __comp);</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<p>这里就不贴<code>__unguarded_linear_insert</code>的代码了，只需要知道其作用</p>
+<p>其作用是找到应插入的位置并插入（无底洞啊，不建议自己查看）</p>
+<p>而如果，当前值要插在前头，直接让其他的后移</p>
+<p>理论上和普通插排毫无区别<del>实际也是</del>，但是略微对常数有所优化</p>
+<p>那<code>__unguarded_insertion_sort</code>与<code>__insertion_sort</code>有何区别？又有什么用？</p>
+<p>貌似是省去了<code>if</code>的判断句？</p>
+<p>仅此而已？！</p>
+<p>对，仅此而已。</p>
+<p>但是为什么可以去掉呢？</p>
+<p>因为这一排序是<strong>建立在最左边永远是最小值</strong>的基础上的</p>
+<p>不仅是<code>__unguarded_insertion_sort</code>，事实上，所有的以<code>__unguarded</code>开头的函数</p>
+<p><strong>都不会考虑越界！</strong></p>
+<p>而众所周知，比较函数是很耗时的，因此常数会有较大提升</p>
+<h3 id="2-2-3-效率"><a href="#2-2-3-效率" class="headerlink" title="2.2.3 效率"></a>2.2.3 效率</h3><p>我们从各种操作入手分析</p>
+<p>首先，经典插排，$2N$次比较，$3N$次赋值，$N$次减法，$N$次自减。</p>
+<p>其次，<code>__insertion_sort</code></p>
+<p>分两种情况：</p>
+<p>每次第一分支，即<code>if</code>语句执行情况，$N+1$次比较，$N+1$次赋值，$3N$次自减/加（注意：此处$+1$这类常数不可忽略）</p>
+<p>每次第二分支，即<code>else</code>语句执行情况，$N+1$次比较，$2N$次赋值，$N$次自减</p>
+<p>那么假设二者出现概率相同，则平均为$N+1$次比较，$1.5N+0.5$次赋值，$2N$次自减</p>
+<p>可以看到，少了$N-1$次比较，$1.5N-0.5$次赋值，$N$次减法，多了$N$次自减</p>
+<p>而且，已知比较时间开销很大，赋值小一些，而减法、自检基本不耗时</p>
+<p>而<code>__unguarded_insertion_sort</code>则是$N$次比较，$2N$次赋值和$N$次自减（与每次第二分支时间复杂度基本相同）</p>
+<p>不过，在$N$很大时，$+1$的常数也会很大，这也是一直没有省略的原因</p>
+<p>（以上复杂度请读者自行证明）</p>
+<h3 id="2-2-4-其他"><a href="#2-2-4-其他" class="headerlink" title="2.2.4 其他"></a>2.2.4 其他</h3><p>既然<code>__unguarded_insertion_sort</code>的时间要小得多，那么为什么不直接用呢？</p>
+<p>不知道读者有没有注意到2.2.2最后有一行加粗的字体</p>
+<p>这一行字解释了为什么不能直接用<code>__unguarded_insertion_sort</code>排序</p>
+<p>等等，如何保证在<code>__insertion_sort</code>后，<strong>全局最小值</strong>在左边呢？</p>
+<p>先回到<code>__introsort_loop</code>，它在什么情况下会返回呢？</p>
+<p>一是区域小于等于16（即<code>_S_threshold</code>），二是超过<code>depth_limit</code>，也就是$\log_2n$</p>
+<p>而由快排定义可知，左边区间的所有数据一定比右边小（也可参考图）：</p>
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/6/6a/Sorting_quicksort_anim.gif" alt></p>
+<p>所以，如果是第一种情况，就可以得出最小值在左边</p>
+<p>如果是第二种情况，那么最左边的区间会调用堆排序，所以这段区间的最小值一定位于最左端。再加上左边区间所有的数据一定比右边小，那么最左边的数据一定是全局最小值</p>
+<h1 id="3-其他"><a href="#3-其他" class="headerlink" title="3.其他"></a>3.其他</h1><p>至此，我们完成了对<code>sort</code>的初步探究（仅是初步）</p>
+<p>那么，是不是所有容器都能使用<code>sort</code>呢？</p>
+<p>并不是，主要有<code>vector</code>、<code>list</code>、数组可以使用</p>
+<p><code>unordered_</code>开头的容器只有前向迭代器，然而在1中已经说过，只有随机迭代器才能使用<code>sort</code></p>
+<p>而，<code>map</code>、<code>set</code>、<code>priority_queue</code>这类自带排序的当然是用不了了</p>
+<p>而<code>queue</code>、<code>stack</code>这类则因为它们对出口和入口做了限制，无法排序</p>
+<p>那<code>list</code>呢？它的迭代器是双向迭代器，也不行</p>
+<p>不过不必担心，众所周知，<code>list</code>自带<code>list::sort</code>，虽然不能用<code>std</code>，但可以自己使用</p>
+<p>万万没想到啊，一个小小的<code>sort</code>居然有这么多优化</p>
+<p>不得不说，<code>C++ STL</code>编写者真的把编译器的效率压榨了不少，真是视效率如生命啊！</p>
+<p>试问：有多少人能够自己写出像<code>STL</code>这样好的库？</p>
+<p>这正是C++优点所在（并未引战）</p>
+<p>什么？平板电视？反正平板电视也没<code>sort</code></p>
+<p>这倒是让我想起一个东西：<a href="https://baike.baidu.com/item/平方根倒数速算法/4075273" target="_blank" rel="noopener">平方根倒数速算法</a></p>
+
+    </div>
+
+    
+    
+    
+        
+      
+
+      <footer class="post-footer">
+          
+            
+          
+          <div class="post-tags">
+            
+              <a href="/tags/算法/" rel="tag"><i class="fa fa-tag"></i> 算法</a>
+            
+          </div>
+        
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/算法导论——总论/" rel="next" title="算法导论——总论">
+                  <i class="fa fa-chevron-left"></i> 算法导论——总论
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </div>
+  
+  
+  
+  </article>
+
+  </div>
+
+
+          </div>
+          
+    
+    
+  <div class="comments" id="comments">
+    <div id="lv-container" data-id="city" data-uid="MTAyMC80NjIyOS8yMjc0MA=="></div>
+  </div>
+  
+  
+
+        </div>
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+        
+        
+        
+        
+      
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc" data-target="post-toc-wrap">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc">
+            <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#0-前言"><span class="nav-number">1.</span> <span class="nav-text">0.前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1-观察"><span class="nav-number">2.</span> <span class="nav-text">1.观察</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-深入分析"><span class="nav-number">3.</span> <span class="nav-text">2.深入分析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-introsort-loop"><span class="nav-number">3.1.</span> <span class="nav-text">2.1 __introsort_loop</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-1-1到-2"><span class="nav-number">3.1.1.</span> <span class="nav-text">2.1.1 //1到//2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-2-3"><span class="nav-number">3.1.2.</span> <span class="nav-text">2.1.2 //3</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-3-4"><span class="nav-number">3.1.3.</span> <span class="nav-text">2.1.3 //4</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-final-insertion-sort"><span class="nav-number">3.2.</span> <span class="nav-text">2.2 __final_insertion_sort</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-1-插排复习"><span class="nav-number">3.2.1.</span> <span class="nav-text">2.2.1 插排复习</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-2-分析"><span class="nav-number">3.2.2.</span> <span class="nav-text">2.2.2 分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-3-效率"><span class="nav-number">3.2.3.</span> <span class="nav-text">2.2.3 效率</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-4-其他"><span class="nav-number">3.2.4.</span> <span class="nav-text">2.2.4 其他</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-其他"><span class="nav-number">4.</span> <span class="nav-text">3.其他</span></a></li></ol></div>
+          </div>
+        
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image"
+      src="/images/main.jpg"
+      alt="Victory_Defeat">
+  <p class="site-author-name" itemprop="name">Victory_Defeat</p>
+  <div class="site-description motion-element" itemprop="description"></div>
+</div>
+  <nav class="site-state motion-element">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">10</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+          
+            <a href="/tags/">
+          
+        
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">标签</span>
+        </a>
+      </div>
+    
+  </nav>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://github.com/VictoryDefeat" title="GitHub &rarr; https://github.com/VictoryDefeat" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://mail.qq.com/cgi-bin/frame_html?sid=fVsPLSYfd5-BE1cK&r=b405d742415ddd927518141e87f2537c" title="E-Mail &rarr; https://mail.qq.com/cgi-bin/frame_html?sid=fVsPLSYfd5-BE1cK&r=b405d742415ddd927518141e87f2537c" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://www.luogu.org/space/show?uid=70592" title="luogu &rarr; https://www.luogu.org/space/show?uid=70592" rel="noopener" target="_blank"><i class="fa fa-fw fa-code"></i>luogu</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://space.bilibili.com/452651850" title="bilibili &rarr; https://space.bilibili.com/452651850" rel="noopener" target="_blank"><i class="fa fa-fw fa-tv"></i>bilibili</a>
+      </span>
+    
+  </div>
+
+
+        </div>
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2015 – <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Victory_Defeat</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">97k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">1:28</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="site-uv" title="总访客量">
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+    <span class="post-meta-divider">|</span>
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-eye"></i>
+    </span>
+    <span class="site-pv" title="总访问量">
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <a class="book-mark-link book-mark-link-fixed" href="#"></a>
+
+  </div>
+
+  
+    
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/js/utils.js?v=7.3.0"></script><script src="/js/motion.js?v=7.3.0"></script><script src="/js/bookmark.js?v=7.3.0"></script>
+<script src="/js/schemes/pisces.js?v=7.3.0"></script>
+
+<script src="/js/next-boot.js?v=7.3.0"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script src="/js/local-search.js?v=7.3.0"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+    
+      
+<script type="text/x-mathjax-config">
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') {
+          next = next.nextSibling;
+        }
+        if (next && next.nodeName.toLowerCase() === 'br') {
+          next.parentNode.removeChild(next);
+        }
+      }
+    });
+  });
+
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      element = document.getElementById(all[i].inputID + '-Frame').parentNode;
+      if (element.nodeName.toLowerCase() == 'li') {
+        element = element.parentNode;
+      }
+      element.classList.add('has-jax');
+    }
+  });
+</script>
+<script>
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML', () => {
+    MathJax.Hub.Typeset();
+  }, window.MathJax);
+</script>
+
+    
+  
+
+  
+
+  
+
+
+  
+
+  <canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas>
+  <script src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script>
+  <script async src="/js/cursor/explosion.min.js"></script>
+
+  
+  <script src="/js/post-details.js?v=7.3.0"></script>
+
+
+<script>
+  window.livereOptions = {
+    refer: location.pathname.replace(CONFIG.root, '').replace('index.html', '')
+  };
+  (function(d, s) {
+    var j, e = d.getElementsByTagName(s)[0];
+    if (typeof LivereTower === 'function') { return; }
+    j = d.createElement(s);
+    j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+    j.async = true;
+    e.parentNode.insertBefore(j, e);
+  })(document, 'script');
+</script>
+
+<!-- themes/[theme_name]/layout/_script/comments.swig -->
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>
