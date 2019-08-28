@@ -83,7 +83,7 @@
 <meta property="og:image" content="http://feihu.me/img/posts/stl-recursive-call-comparison.png">
 <meta property="og:image" content="https://upload.wikimedia.org/wikipedia/commons/1/1b/Sorting_heapsort_anim.gif">
 <meta property="og:image" content="https://upload.wikimedia.org/wikipedia/commons/6/6a/Sorting_quicksort_anim.gif">
-<meta property="og:updated_time" content="2019-08-28T04:37:40.709Z">
+<meta property="og:updated_time" content="2019-08-28T11:40:48.458Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="浅析sort">
 <meta name="twitter:description" content="0.前言相信每个入门的同学都见过这样一个题目： 给定一些整数，将它们从小到大排序后输出 同学们常常会写这样的代码：">
@@ -294,7 +294,7 @@
                 
               
 
-              <time title="创建时间：2019-08-28 10:35:54 / 修改时间：12:37:40" itemprop="dateCreated datePublished" datetime="2019-08-28T10:35:54+08:00">2019-08-28</time>
+              <time title="创建时间：2019-08-28 10:35:54 / 修改时间：19:40:48" itemprop="dateCreated datePublished" datetime="2019-08-28T10:35:54+08:00">2019-08-28</time>
             </span>
           
             
@@ -319,7 +319,7 @@
               
                 <span class="post-meta-item-text">本文字数：</span>
               
-              <span>6k</span>
+              <span>6.9k</span>
             </span>
           
             <span class="post-meta-item" title="阅读时长">
@@ -329,7 +329,7 @@
               
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
               
-              <span>5 分钟</span>
+              <span>6 分钟</span>
             </span>
           
 
@@ -350,6 +350,7 @@
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">int</span> n,a[<span class="number">1000010</span>];</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;n);</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;++i)<span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;a[i]);</span><br><span class="line">	sort(a+<span class="number">1</span>,a+<span class="number">1</span>+n);</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;n;++i)<span class="built_in">printf</span>(<span class="string">"%d "</span>,a[i]);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"%d\n"</span>,a[n]);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>这里的<code>sort</code>就是我们今天的主角</p>
 <p>别看它语句短小，但却无比精悍</p>
+<p>$upd:2019.8.28 19:22$ 更新$2.1$部分，增添了”还是//3”一项</p>
 <h1 id="1-观察"><a href="#1-观察" class="headerlink" title="1.观察"></a>1.观察</h1><p>首先，观察<code>sort</code>的来源（我这里使用了<code>VSCode</code>的速览定义功能）</p>
 <p>观察到它包含在<code>stl_algo.h</code>文件中（这一文件包含在<code>algorithm</code>头文件中）</p>
 <p>找到其定义为</p>
@@ -372,11 +373,21 @@
 <h3 id="2-1-2-3"><a href="#2-1-2-3" class="headerlink" title="2.1.2 //3"></a>2.1.2 //3</h3><p>不过这并不能让快排避免退化的危机，只能解决常数问题</p>
 <p>然而<code>sort</code>似乎基本没有退化过，这是为什么呢？</p>
 <p>首先注意<code>//3</code>处（<code>pivot</code>就是常说的哨兵）</p>
-<p>这里的哨兵并没有使用<code>start</code>，<code>last</code>，<code>comp</code>中的任何一个</p>
+<p>这里的哨兵并没有使用<code>start</code>，<code>last</code>，中部中的任何一个</p>
 <p>通过持续跟踪，发现哨兵使用的是三者的中值</p>
 <p>这就从一定程度上优化了算法</p>
-<p>（据说<code>//3</code>处是分割算法，然而本人未发现其实际作用，故此处暂不分析）</p>
-<h3 id="2-1-3-4"><a href="#2-1-3-4" class="headerlink" title="2.1.3 //4"></a>2.1.3 //4</h3><p>这个<code>partial_sort</code>是什么？为什么要用它？</p>
+<h3 id="2-1-3-还是-3"><a href="#2-1-3-还是-3" class="headerlink" title="2.1.3 还是//3"></a>2.1.3 还是//3</h3><p>老样子，直接上这一部分的源码：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> _RandomAccessIterator, <span class="keyword">typename</span> _Compare&gt;</span><br><span class="line">    <span class="keyword">inline</span> _RandomAccessIterator</span><br><span class="line">    __unguarded_partition_pivot(_RandomAccessIterator __first,</span><br><span class="line">				_RandomAccessIterator __last, _Compare __comp)</span><br><span class="line">    &#123;</span><br><span class="line">      _RandomAccessIterator __mid = __first + (__last - __first) / <span class="number">2</span>;</span><br><span class="line">      <span class="built_in">std</span>::__move_median_first(__first, __mid, (__last - <span class="number">1</span>), __comp);</span><br><span class="line">      <span class="keyword">return</span> <span class="built_in">std</span>::__unguarded_partition(__first + <span class="number">1</span>, __last, *__first, __comp);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p><code>__move_median_first</code>是用来将三者从小到大排序</p>
+<p><code>__unguarded_partition</code>而不断去交换位置错误的元素，直到first和last指针无有效区域为止</p>
+<p>它并不会去做任何一次比较运算（这一点在下文$2.2.2$中也有提及）</p>
+<p>那么，为什么能不比较呢？</p>
+<p>它由于$2.1.2$的保证（即使用三者的中值），可以得出一定会在超出有效区域之前中止</p>
+<p>也就是说，它可以保证不需要比较，可以自动操作，不必考虑越界问题</p>
+<p>不比较，又可以进行一定的常数优化</p>
+<p>减少常数、运算次数，就是<code>STL</code>编写者的唯一目的<del>（所以连码风都不管了）</del></p>
+<p>这一算法被称之为分割算法（即原版本说的没看懂的部分，也是对$2.1.2$的一些补充）</p>
+<h3 id="2-1-4-4"><a href="#2-1-4-4" class="headerlink" title="2.1.4 //4"></a>2.1.4 //4</h3><p>这个<code>partial_sort</code>是什么？为什么要用它？</p>
 <p>通过调查源码，发现这个<code>partial_sort</code>就是堆排：</p>
 <p><img src="https://upload.wikimedia.org/wikipedia/commons/1/1b/Sorting_heapsort_anim.gif" alt></p>
 <p>那么<code>depth_limit</code>是什么？有何作用？</p>
@@ -411,7 +422,7 @@
 <p>对，仅此而已。</p>
 <p>但是为什么可以去掉呢？</p>
 <p>因为这一排序是<strong>建立在最左边永远是最小值</strong>的基础上的</p>
-<p>不仅是<code>__unguarded_insertion_sort</code>，事实上，所有的以<code>__unguarded</code>开头的函数</p>
+<p>不仅是<code>__unguarded_insertion_sort</code>、<code>__unguarded_partition</code>，事实上，所有的以<code>__unguarded</code>开头的函数</p>
 <p><strong>都不会考虑越界！</strong></p>
 <p>而众所周知，比较函数是很耗时的，因此常数会有较大提升</p>
 <h3 id="2-2-3-效率"><a href="#2-2-3-效率" class="headerlink" title="2.2.3 效率"></a>2.2.3 效率</h3><p>我们从各种操作入手分析</p>
@@ -540,7 +551,7 @@
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
           <div class="post-toc">
-            <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#0-前言"><span class="nav-number">1.</span> <span class="nav-text">0.前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1-观察"><span class="nav-number">2.</span> <span class="nav-text">1.观察</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-深入分析"><span class="nav-number">3.</span> <span class="nav-text">2.深入分析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-introsort-loop"><span class="nav-number">3.1.</span> <span class="nav-text">2.1 __introsort_loop</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-1-1到-2"><span class="nav-number">3.1.1.</span> <span class="nav-text">2.1.1 //1到//2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-2-3"><span class="nav-number">3.1.2.</span> <span class="nav-text">2.1.2 //3</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-3-4"><span class="nav-number">3.1.3.</span> <span class="nav-text">2.1.3 //4</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-final-insertion-sort"><span class="nav-number">3.2.</span> <span class="nav-text">2.2 __final_insertion_sort</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-1-插排复习"><span class="nav-number">3.2.1.</span> <span class="nav-text">2.2.1 插排复习</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-2-分析"><span class="nav-number">3.2.2.</span> <span class="nav-text">2.2.2 分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-3-效率"><span class="nav-number">3.2.3.</span> <span class="nav-text">2.2.3 效率</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-4-其他"><span class="nav-number">3.2.4.</span> <span class="nav-text">2.2.4 其他</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-其他"><span class="nav-number">4.</span> <span class="nav-text">3.其他</span></a></li></ol></div>
+            <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#0-前言"><span class="nav-number">1.</span> <span class="nav-text">0.前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1-观察"><span class="nav-number">2.</span> <span class="nav-text">1.观察</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-深入分析"><span class="nav-number">3.</span> <span class="nav-text">2.深入分析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-introsort-loop"><span class="nav-number">3.1.</span> <span class="nav-text">2.1 __introsort_loop</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-1-1到-2"><span class="nav-number">3.1.1.</span> <span class="nav-text">2.1.1 //1到//2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-2-3"><span class="nav-number">3.1.2.</span> <span class="nav-text">2.1.2 //3</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-3-还是-3"><span class="nav-number">3.1.3.</span> <span class="nav-text">2.1.3 还是//3</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-4-4"><span class="nav-number">3.1.4.</span> <span class="nav-text">2.1.4 //4</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-final-insertion-sort"><span class="nav-number">3.2.</span> <span class="nav-text">2.2 __final_insertion_sort</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-1-插排复习"><span class="nav-number">3.2.1.</span> <span class="nav-text">2.2.1 插排复习</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-2-分析"><span class="nav-number">3.2.2.</span> <span class="nav-text">2.2.2 分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-3-效率"><span class="nav-number">3.2.3.</span> <span class="nav-text">2.2.3 效率</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-4-其他"><span class="nav-number">3.2.4.</span> <span class="nav-text">2.2.4 其他</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-其他"><span class="nav-number">4.</span> <span class="nav-text">3.其他</span></a></li></ol></div>
           </div>
         
       </div>
@@ -659,12 +670,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">97k</span>
+    <span title="站点总字数">98k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:28</span>
+    <span title="站点阅读时长">1:29</span>
 </div>
 
         
