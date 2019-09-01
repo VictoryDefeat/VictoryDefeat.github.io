@@ -72,14 +72,18 @@
     }
 </style>
 
-  <meta property="og:type" content="article">
-<meta property="og:title" content="题解 CF123A【Chips Moving】">
+  <meta name="description" content="题目大意：给你$n$个点，每个点在一条数轴上，其坐标为$a_i$ ，将$a_i\pm1$需要一个代价而将$a_i\pm2$无需代价">
+<meta name="keywords" content="题解">
+<meta property="og:type" content="article">
+<meta property="og:title" content="题解CF123A【Chips Moving】">
 <meta property="og:url" content="http://victorydefeat.ml/题解CF123A【Chips-Moving】/index.html">
 <meta property="og:site_name" content="Victory_Defeat&#39;s Blog">
+<meta property="og:description" content="题目大意：给你$n$个点，每个点在一条数轴上，其坐标为$a_i$ ，将$a_i\pm1$需要一个代价而将$a_i\pm2$无需代价">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-09-01T05:43:44.403Z">
+<meta property="og:updated_time" content="2019-09-01T05:46:13.968Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="题解 CF123A【Chips Moving】">
+<meta name="twitter:title" content="题解CF123A【Chips Moving】">
+<meta name="twitter:description" content="题目大意：给你$n$个点，每个点在一条数轴上，其坐标为$a_i$ ，将$a_i\pm1$需要一个代价而将$a_i\pm2$无需代价">
   <link rel="canonical" href="http://victorydefeat.ml/题解CF123A【Chips-Moving】/">
 
 
@@ -94,7 +98,7 @@
   };
 </script>
 
-  <title>题解 CF123A【Chips Moving】 | Victory_Defeat's Blog</title>
+  <title>题解CF123A【Chips Moving】 | Victory_Defeat's Blog</title>
   <meta name="generator" content="Hexo 3.9.0">
   
 
@@ -280,7 +284,7 @@
       <meta itemprop="name" content="Victory_Defeat's Blog">
     </span>
       <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">题解 CF123A【Chips Moving】
+        <h1 class="post-title" itemprop="name headline">题解CF123A【Chips Moving】
 
           
         </h1>
@@ -297,8 +301,12 @@
                 
               
 
-              <time title="创建时间：2019-09-01 13:43:44" itemprop="dateCreated datePublished" datetime="2019-09-01T13:43:44+08:00">2019-09-01</time>
+              <time title="创建时间：2019-09-01 13:43:44 / 修改时间：13:46:13" itemprop="dateCreated datePublished" datetime="2019-09-01T13:43:44+08:00">2019-09-01</time>
             </span>
+          
+            
+
+            
           
 
           
@@ -318,7 +326,7 @@
               
                 <span class="post-meta-item-text">本文字数：</span>
               
-              <span>0</span>
+              <span>1.3k</span>
             </span>
           
             <span class="post-meta-item" title="阅读时长">
@@ -341,7 +349,22 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        
+        <p>题目大意：</p><p>给你$n$个点，每个点在一条数轴上，其坐标为$a_i$ ，将$a_i\pm1$需要一个代价</p><p>而将$a_i\pm2$无需代价</p><a id="more"></a>
+
+
+<p>求出将所有点移到同一个点的最小代价（注意：该点可以为$0$，负数）</p>
+<p>显然，一道水题</p>
+<p>怎么做呢？由于$\pm2$无需代价，因此不考虑含有$2$的部分，也就是只考虑奇偶性</p>
+<p>然而在把所有点都变成$0$或$1$之后，如何求答案呢？</p>
+<p>显然，必然是将$0$全部移到$1$或者$1$全部移到$0$</p>
+<p>取二者最小值即可</p>
+<p>具体步骤：</p>
+<ol>
+<li>每个点判奇偶，如为奇，则$++x$，否则$++y$</li>
+<li>取$x,y$的最小值输出即可</li>
+</ol>
+<p>代码：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">long</span> <span class="keyword">long</span> ll;</span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">double</span> lf;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> reg register</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> gc() (p1==p2&amp;&amp;(p2=(p1=buf)+fread(buf,1,1&lt;&lt;21,stdin),p1==p2)?EOF:*p1++)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> input(a)&#123;a=0;char c=gc();int f=1;while(c<span class="meta-string">&lt;'0'||c&gt;'9')&#123;if(c=='-')f=-1;c=gc();&#125;while(c&gt;='0'&amp;&amp;c&lt;='9')&#123;a=(a&lt;&lt;3)+(a&lt;&lt;1)+(c&amp;15);c=gc();&#125;a*=f;&#125;</span></span></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">char</span> buf[<span class="number">1</span>&lt;&lt;<span class="number">21</span>],*p1=buf,*p2=buf;</span><br><span class="line"><span class="keyword">char</span> bu[<span class="number">1</span>&lt;&lt;<span class="number">21</span>],cha[<span class="number">20</span>];<span class="keyword">int</span> p,pp=<span class="number">-1</span>;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> flush()&#123;fwrite(bu,1,pp+1,stdout),pp=-1;&#125;</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> output(x)&#123;<span class="meta-keyword">if</span>(pp&gt;1&lt;&lt;20)flush();<span class="meta-keyword">if</span>(x&lt;0)bu[++pp]=45,x=-x;do&#123;cha[++p]=x%10+48;&#125;while(x/=10);do&#123;bu[++pp]=cha[p];&#125;while(--p);&#125;</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> Endl bu[++pp]=<span class="meta-string">'\n'</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> Space bu[++pp]=<span class="meta-string">' '</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> pc(c) bu[++pp]=c</span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> N=<span class="number">100010</span>;</span><br><span class="line"><span class="comment">//以上请忽略</span></span><br><span class="line"><span class="keyword">int</span> n,a,x,y;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    input(n);</span><br><span class="line">    <span class="keyword">for</span>(;n;--n)&#123;input(a);a&amp;<span class="number">1</span>?++x:++y;&#125;</span><br><span class="line">    <span class="comment">//如果为奇，++x，否则，++y</span></span><br><span class="line">    x=min(x,y);</span><br><span class="line">    <span class="comment">//取最小值</span></span><br><span class="line">    output(x);</span><br><span class="line">    <span class="comment">//输出</span></span><br><span class="line">    flush();</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
     </div>
 
     
@@ -351,14 +374,23 @@
       
 
       <footer class="post-footer">
+          
+            
+          
+          <div class="post-tags">
+            
+              <a href="/tags/题解/" rel="tag"><i class="fa fa-tag"></i> 题解</a>
+            
+          </div>
+        
 
         
 
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
               
-                <a href="/题解-CF123A【Chips-Moving】/" rel="next" title="题解CF123A【Chips Moving】">
-                  <i class="fa fa-chevron-left"></i> 题解CF123A【Chips Moving】
+                <a href="/天选之子v1-8/" rel="next" title="天选之子v1.8">
+                  <i class="fa fa-chevron-left"></i> 天选之子v1.8
                 </a>
               
             </div>
@@ -437,7 +469,7 @@
         
           <a href="/archives/">
         
-          <span class="site-state-item-count">13</span>
+          <span class="site-state-item-count">12</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
