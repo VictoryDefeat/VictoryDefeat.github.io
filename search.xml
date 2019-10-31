@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[CSP2019游记]]></title>
+    <url>%2FCSP2019%E6%B8%B8%E8%AE%B0%2F</url>
+    <content type="text"><![CDATA[Day -1（注：其实是初赛那天，并非前一天）信心不是很足，感觉自己$-S$很危险，$-J$稳过考完出来虚的不行 早上某同学说他前面两个就是$ZZQ$，而且在最后$30$分钟的时候一直想着怎么提前交卷（%$ZZQ$神仙） 前两天一看成绩，果然$-S$挂了，$WH$分数线$61$，我$57.5$，草（中日双语） 果然洛谷网校没好好上的后果就是初赛没过（我校初三怕不是就我一个没过……丢人） 我爸在我看成绩之前毒奶： “你$-S$肯定过不了” 然后，神奇的毒奶应验了……]]></content>
+      <tags>
+        <tag>游记</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[题解CF123A【Chips Moving】]]></title>
     <url>%2F%E9%A2%98%E8%A7%A3CF123A%E3%80%90Chips-Moving%E3%80%91%2F</url>
     <content type="text"><![CDATA[题目大意：给你$n$个点，每个点在一条数轴上，其坐标为$a_i$ ，将$a_i\pm1$需要一个代价而将$a_i\pm2$无需代价 求出将所有点移到同一个点的最小代价（注意：该点可以为$0$，负数） 显然，一道水题 怎么做呢？由于$\pm2$无需代价，因此不考虑含有$2$的部分，也就是只考虑奇偶性 然而在把所有点都变成$0$或$1$之后，如何求答案呢？ 显然，必然是将$0$全部移到$1$或者$1$全部移到$0$ 取二者最小值即可 具体步骤： 每个点判奇偶，如为奇，则$++x$，否则$++y$ 取$x,y$的最小值输出即可 代码： 1234567891011121314151617181920212223242526272829#include&lt;bits/stdc++.h&gt;using namespace std;typedef long long ll;typedef double lf;#define reg register#define gc() (p1==p2&amp;&amp;(p2=(p1=buf)+fread(buf,1,1&lt;&lt;21,stdin),p1==p2)?EOF:*p1++)#define input(a)&#123;a=0;char c=gc();int f=1;while(c&lt;'0'||c&gt;'9')&#123;if(c=='-')f=-1;c=gc();&#125;while(c&gt;='0'&amp;&amp;c&lt;='9')&#123;a=(a&lt;&lt;3)+(a&lt;&lt;1)+(c&amp;15);c=gc();&#125;a*=f;&#125;static char buf[1&lt;&lt;21],*p1=buf,*p2=buf;char bu[1&lt;&lt;21],cha[20];int p,pp=-1;#define flush()&#123;fwrite(bu,1,pp+1,stdout),pp=-1;&#125;#define output(x)&#123;if(pp&gt;1&lt;&lt;20)flush();if(x&lt;0)bu[++pp]=45,x=-x;do&#123;cha[++p]=x%10+48;&#125;while(x/=10);do&#123;bu[++pp]=cha[p];&#125;while(--p);&#125;#define Endl bu[++pp]='\n'#define Space bu[++pp]=' '#define pc(c) bu[++pp]=cconst int N=100010;//以上请忽略int n,a,x,y;int main()&#123; input(n); for(;n;--n)&#123;input(a);a&amp;1?++x:++y;&#125; //如果为奇，++x，否则，++y x=min(x,y); //取最小值 output(x); //输出 flush(); return 0;&#125;]]></content>
